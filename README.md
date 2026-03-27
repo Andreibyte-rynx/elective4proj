@@ -16,7 +16,7 @@ It includes documentation, source code, and other resources used in the developm
 
 Yes, this section is important.
 
-The **Pinaka Pogi** section is dedicated to the most handsome and legendary contributor of this project.
+The **Pinaka Pogi** section is dedicated to the most handsome and legendary person that ever lived.
 
 ---
 
