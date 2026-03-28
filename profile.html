@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Spotlight • Meet the Crew</title>
+    <title>Profile • Team Spotlight</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     
-    <!-- Instant automatic dark mode (exactly like your old Firebase site) -->
+    <!-- Instant automatic dark mode -->
     <script>
         const savedMode = localStorage.getItem('darkMode')
         if (savedMode === 'true' || (savedMode === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -40,20 +40,39 @@
     </div>
 </nav>
 
-    <!-- HOME VIEW -->
-    <div class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
-        <h2 class="text-5xl font-semibold tracking-tighter mb-4">Meet the Team</h2>
-        <p class="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Four passionate people. One mission. Get to know each member with their favorite things, stories, and more.
-        </p>
-        <div class="mt-8 inline-flex items-center gap-2 bg-white dark:bg-zinc-900 px-6 py-3 rounded-3xl border border-zinc-200 dark:border-zinc-800 text-sm font-medium">
-            <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-            Tokyo-based • Fully interactive front-end
-        </div>
-    </div>
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        
+        <!-- Back button -->
+        <button onclick="window.location.href='index.html'" 
+                class="flex items-center gap-2 text-sky-400 hover:text-sky-300 mb-6 font-medium">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Team
+        </button>
 
-    <div class="max-w-7xl mx-auto px-6 pb-20">
-        <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+        <!-- Profile Header / Hero -->
+        <div class="rounded-3xl overflow-hidden relative h-80 mb-12">
+            <img id="profile-hero-image" src="" alt="" class="w-full h-full object-cover">
+            <div class="profile-hero absolute inset-0 flex items-end p-8">
+                <div>
+                    <h1 id="profile-name" class="text-5xl font-semibold text-white tracking-tighter"></h1>
+                    <p id="profile-role" class="text-sky-200 text-2xl"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="max-w-3xl mx-auto">
+            <h3 class="text-2xl font-semibold mb-4">About me</h3>
+            <p id="profile-bio" class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400"></p>
+        </div>
+
+        <!-- Favorites & Fun Facts -->
+        <div class="max-w-5xl mx-auto mt-16">
+            <h3 class="text-2xl font-semibold mb-8 text-center">My Favorites &amp; Fun Facts</h3>
+            <div id="info-cards" class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
     </div>
 
     <script src="main.js"></script>

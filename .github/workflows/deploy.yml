@@ -1,23 +1,69 @@
-name: Deploy Website
+name: Deploy Team Website to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  workflow_dispatch:   # Allows manual trigger if needed
 
 permissions:
-  contents: write   # 🔥 THIS FIXES ERROR 128
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ──────── VALIDATION CHECKS (Runs FIRST) ────────
+      - name: Check if index.html exists
+        run: |
+          if [ ! -f "index.html" ]; then
+            echo "❌ ERROR: index.html is missing! Deployment rejected."
+            exit 1
+          fi
+          echo "✅ index.html found."
+
+      - name: Check for required files
+        run: |
+          echo "Checking additional files..."
+          [ -f "styles.css" ] && echo "✅ styles.css found." || echo "⚠️ styles.css is missing (recommended)"
+          [ -f "main.js" ] && echo "✅ main.js found." || echo "⚠️ script.js is missing (recommended)"
+
+      - name: Validate HTML syntax
+        run: |
+          echo "Installing HTML validator..."
+          sudo apt-get install -y tidy
+          echo "Validating index.html..."
+          tidy -q -e index.html || {
+            echo "❌ HTML validation failed! Please fix the errors in index.html before pushing."
+            echo "Common issues: missing tags, broken quotes, or invalid structure."
+            exit 1
+          }
+          echo "✅ HTML syntax is valid."
+
+      # You can add more checks here later if needed
+
+      # ──────── DEPLOYMENT (Only runs if all checks above pass) ────────
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact for deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'     # Deploy all files from the root folder
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
