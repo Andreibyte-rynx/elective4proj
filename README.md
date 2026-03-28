@@ -98,6 +98,3 @@ This project was created for educational purposes. Feel free to use and modify i
 
 ---
 
-- Include a section about how to customize the team members
-
-Just tell me and I’ll update it instantly! 🚀
